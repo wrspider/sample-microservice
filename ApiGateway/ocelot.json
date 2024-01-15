@@ -1,0 +1,74 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/{url}", //下游服务地址--url变量,
+      "DownstreamScheme": "http", //"DownstreamScheme": "https",
+      "UpstreamPathTemplate": "/test1/{url}", //即客户端请求到API Gateway的请求,上游请求路径，网关地址--url变量
+      "UpstreamHttpMethod": [ "GET", "POST" ],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+
+      "ServiceName": "API_1", //Consul服务名称
+      "UseServiceDiscovery": true,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "APIKey_1", //指定一個key
+        "AllowedScopes": [ "API_1" ] //id4的作用域名稱
+      },
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/{url}", //下游服务地址--url变量
+      "DownstreamScheme": "http",
+      "UpstreamPathTemplate": "/test2/{url}", //上游请求路径，网关地址--url变量
+      "UpstreamHttpMethod": [ "GET", "POST" ],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5002
+        }
+      ],
+
+      "ServiceName": "API_2", //Consul服务名称
+      "UseServiceDiscovery": true,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "APIKey_2", //指定一個key
+        "AllowedScopes": [ "API_2" ] //id4的作用域名稱
+      },
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
+      //
+    }
+
+  ],
+
+  //"RateLimitOptions": {
+  //  "ClientWhitelist": [],
+  //  "EnableRateLimiting": true,
+  //  "Period": "1s",
+  //  "PeriodTimespan": 1,
+  //  "Limit": 10
+  //},
+  "GlobalConfiguration": {
+    //  // 网关服务的访问地址
+    //"BaseUrl": "https://localhost:7080",
+    "ServiceDiscoveryProvider": {
+      "Scheme": "http",
+      "Host": "localhost",
+      "Port": 8500,
+      "Type": "Consul"
+    }
+    //"Logging": {
+    //  "LogLevel": {
+    //    "Default": "Information",
+    //    "Microsoft.AspNetCore": "Warning"
+    //  }
+    //}
+  }
+}
