@@ -1,15 +1,14 @@
 ﻿using IdentityServer4.AccessTokenValidation;
 
-using IdentityServer4Center;
+
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Ocelot.Provider.Consul;
 
-using System.Text;
+using SecurityServer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +40,7 @@ builder.Configuration.Bind("JWTTokenOptions", tokenOptions);
 //    options.SupportedTokens = SupportedTokens.Both;
 //});
 // Webapi中是否设置鉴权声明不重要，这里以网关统一认证来说明，Webapi中不加入任何鉴权代码。
+// AddJwtBearer用於保護API，而AddIdentityServerAuthentication用於保護Web應用程序。
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
      .AddJwtBearer("APIKey_1", options =>
@@ -56,8 +56,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
              ClockSkew = TimeSpan.FromSeconds(0),//token过期后立马过期
              ValidateIssuerSigningKey = false,//是否验证SecurityKey
              ValidAudience = tokenOptions.Audience,//Audience,需要跟前面签发jwt的设置一致
-             //ValidIssuer = tokenOptions.Issuer,//Issuer，这两项和前面签发jwt的设置一致
-    
+                                                   // ValidIssuer = tokenOptions.Issuer,//Issuer，这两项和前面签发jwt的设置一致
+
              //IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenOptions.SecurityKey)),//拿到SecurityKey
          };
 

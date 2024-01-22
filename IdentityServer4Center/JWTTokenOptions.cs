@@ -1,18 +1,10 @@
-﻿namespace IdentityServer4Center
+﻿namespace SecurityServer
 {
     public class JWTTokenOptions
     {
-        public string Audience
-        {
-            get;
-            set;
-        }
+        public string Audience { get; set; }
 
-        public string SecurityKey
-        {
-            get;
-            set;
-        }
+        public string SecurityKey { get; set; }
 
         //public SigningCredentials Credentials
         //{
@@ -20,10 +12,6 @@
         //    set;
         //}
 
-        public string Issuer
-        {
-            get;
-            set;
-        }
+        public string Issuer { get; set; }
     }
 }

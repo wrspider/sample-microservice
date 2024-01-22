@@ -1,6 +1,4 @@
-using IdentityServer4.Models;
-
-using IdentityServer4Center;
+﻿using SecurityServer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +12,8 @@ builder.Services.AddIdentityServer()
     .AddInMemoryClients(Id4Config.Clients)
     .AddInMemoryIdentityResources(Id4Config.IdentityResources)
     .AddInMemoryApiResources(Id4Config.ApiResources)
-    .AddInMemoryApiScopes(Id4Config.ApiScopes)
+    .AddInMemoryApiScopes(Id4Config.ApiScopes)//访问的返回
+     .AddTestUsers(Id4Config.GetTestUsers())
     .AddDeveloperSigningCredential();
 
 
@@ -30,10 +29,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseIdentityServer();
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.UseRouting();
-app.UseIdentityServer();
+
 app.Run();

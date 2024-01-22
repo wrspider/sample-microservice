@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API_2", "API_2\API_2.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApiGateway", "ApiGateway\ApiGateway.csproj", "{9803BE3C-D126-4F26-AA82-83C3D18D71CE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer4Center", "IdentityServer4Center\IdentityServer4Center.csproj", "{670CA8C7-89CA-437F-B448-F63D17C8FC61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth", "IdentityServer4Center\Auth.csproj", "{670CA8C7-89CA-437F-B448-F63D17C8FC61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Helper", "Service.Helper\Service.Helper.csproj", "{6369D308-4916-47CE-A6DE-E7FA3F68C662}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service.Helper", "Service.Helper\Service.Helper.csproj", "{6369D308-4916-47CE-A6DE-E7FA3F68C662}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -22,7 +22,7 @@ app.RegisterConsul(_configuration, app.Lifetime);
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
-app.UseAuthorization();
+//app.UseAuthorization();
 
 app.MapControllers();
 

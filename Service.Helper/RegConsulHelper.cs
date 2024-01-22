@@ -60,7 +60,7 @@ namespace Service.Helper
                 context.Response.StatusCode = (int)HttpStatusCode.OK;
                 await context.Response.WriteAsync("OK");
             }));
-            //服务注册
+            //服务注册到consul
             consulClient.Agent.ServiceRegister(registration).Wait();
 
             //应用程序终止时，取消注册
