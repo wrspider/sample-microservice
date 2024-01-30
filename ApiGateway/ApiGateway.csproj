@@ -16,10 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IdentityServer4Center\Auth.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="Controllers\" />
   </ItemGroup>
 

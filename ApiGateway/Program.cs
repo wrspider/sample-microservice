@@ -10,6 +10,8 @@ using Ocelot.Provider.Consul;
 
 using SecurityServer;
 
+using System.Text;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -23,6 +25,19 @@ builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange
 
 JWTTokenOptions tokenOptions = new JWTTokenOptions();
 builder.Configuration.Bind("JWTTokenOptions", tokenOptions);
+
+
+// 添加跨域
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", builder => builder
+        .AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials()
+    );
+});
+
 //.AddJwtBearer("APIKey_1", options =>
 //{
 //    options.Authority = "http://localhost:5055";//id4服務地址
@@ -39,8 +54,10 @@ builder.Configuration.Bind("JWTTokenOptions", tokenOptions);
 //    options.RequireHttpsMetadata = false; //不使用https
 //    options.SupportedTokens = SupportedTokens.Both;
 //});
+/// 授权认证
 // Webapi中是否设置鉴权声明不重要，这里以网关统一认证来说明，Webapi中不加入任何鉴权代码。
 // AddJwtBearer用於保護API，而AddIdentityServerAuthentication用於保護Web應用程序。
+//客户端
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
      .AddJwtBearer("APIKey_1", options =>
@@ -69,6 +86,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
          options.RequireHttpsMetadata = false; //不使用https
          options.SupportedTokens = SupportedTokens.Both;
      });
+// 添加网关
 builder.Services.AddOcelot().AddConsul();
 
 
@@ -82,12 +100,31 @@ if (app.Environment.IsDevelopment())
 }
 //注册Consul服务
 //app.RegisterConsul(_configuration, app.Lifetime);
-
+//app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+//app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllers();
 
 app.UseOcelot().Wait();
+
+// Welcome
+Console.WriteLine(Welcome());
+
 app.Run();
+
+
+static string Welcome()
+{
+    var builder = new StringBuilder();
+    builder.AppendLine("Initializing ...");
+    builder.AppendLine();
+    builder.AppendLine("***************************************************************");
+    builder.AppendLine("*                                                             *");
+    builder.AppendLine("*                Welcome To ApiGateway                        *");
+    builder.AppendLine("*                                                             *");
+    builder.AppendLine("***************************************************************");
+    return builder.ToString();
+}
